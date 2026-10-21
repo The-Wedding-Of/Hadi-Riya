@@ -1,636 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#100d09">
+  <meta name="description" content="Undangan pemberkatan pernikahan Hadianto Kurniawan Tan dan Ilmi Riadoh, 12 Desember 2026.">
+  <title>Hadi & Riya | Wedding Invitation</title>
 
-"use strict";
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-document.addEventListener("DOMContentLoaded", function () {
-  // ELEMEN
-  const $ = (selector) => document.querySelector(selector);
+  <div id="particles" aria-hidden="true"></div>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <audio id="bgMusic" src="Ka.mp3" loop preload="none"></audio>
 
-  const opening = $("#opening");
-  const site = $("#site");
-  const audio = $("#bgMusic");
-  const musicButton = $("#musicToggle");
-  const toast = $("#toast");
+  <!-- HALAMAN PEMBUKA -->
+  <div id="opening" class="screen">
+    <div class="opening-frame">
+      <span class="ornament top-left">❧</span>
+      <span class="ornament top-right">❧</span>
+      <span class="ornament bottom-left">❧</span>
+      <span class="ornament bottom-right">❧</span>
 
-  let opened = false;
-  let particleInterval = null;
-  let toastTimer = null;
+      <p class="eyebrow">THE WEDDING OF</p>
+      <h1 class="script gold-text opening-names">Hadi & Riya</h1>
+      <img class="opening-photo" src="cover1.jpg" alt="Foto prewedding Hadi dan Riya">
 
-  // ==========================================
-  // NAMA TAMU OTOMATIS DARI TAUTAN UNDANGAN
-  // ==========================================
-  const params = new URLSearchParams(window.location.search);
-  const invitedName = params.get("to");
+      <p class="date-line gold-text">12 · 12 · 2026</p>
+      <p class="muted small">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+      <input id="guestName" class="gold-input guest-input"
+             placeholder="Nama tamu (opsional)" maxlength="100">
 
-  const guestName = $("#guestName");
-  const rsvpName = $("#rsvpName");
+      <button id="openButton" class="gold-button">
+        ✧ BUKA UNDANGAN ✧
+      </button>
+      <p class="muted small">Dengan penuh cinta, kami mengundang Anda</p>
+    </div>
+  </div>
 
-  if (invitedName && invitedName.trim()) {
-    const name = invitedName.trim().slice(0, 100);
+  <div id="site">
+    <!-- NAVIGASI -->
+    <nav class="navbar">
+      <a href="#home" class="nav-brand script">Hadi & Riya</a>
+      <div class="nav-links">
+        <a href="#couple">Mempelai</a>
+        <a href="#event">Acara</a>
+        <a href="#gallery">Galeri</a>
+        <a href="#rsvp">RSVP</a>
+      </div>
+      <button id="musicToggle" class="music-button" aria-label="Putar musik">♫</button>
+    </nav>
 
-    if (guestName) {
-      guestName.value = name;
-    }
+    <!-- HERO -->
+    <section id="home" class="hero photo-section">
+      <div class="hero-content">
+        <p class="eyebrow reveal">A CELEBRATION OF LOVE</p>
+        <img class="hero-photo reveal delay-1" src="cover2.jpg" alt="Hadi dan Riya">
+        <h1 class="script hero-names gold-text reveal delay-1">Hadi & Riya</h1>
+        <p class="eyebrow reveal delay-2">UNDANGAN PEMBERKATAN PERNIKAHAN</p>
+        <span class="gold-divider"></span>
+        <p class="date-line reveal delay-2">SABTU, 12 DESEMBER 2026</p>
+      </div>
+      <a href="#welcome" class="scroll-cue">SCROLL TO DISCOVER ↓</a>
+    </section>
 
-    if (rsvpName) {
-      rsvpName.value = name;
-    }
-  }
+    <!-- KATA PEMBUKA -->
+    <section id="welcome" class="photo-section section-padding">
+      <span class="floating-flower flower-left">❀</span>
+      <span class="floating-flower flower-right">✿</span>
 
-  // NOTIFIKASI
-  function showToast(message) {
-    if (!toast) {
-      console.log(message);
-      return;
-    }
+      <div class="container center reveal">
+        <p class="eyebrow">A NOTE FROM OUR HEARTS</p>
+        <div class="monogram gold-text">H <span>&</span> R</div>
+        <span class="gold-divider"></span>
+        <blockquote class="wedding-quote">
+          “Pernikahan bukanlah tentang menemukan seseorang yang sempurna,
+          melainkan tentang belajar melihat seseorang yang tidak sempurna
+          dengan cara yang sempurna.”
+        </blockquote>
+        <p class="welcome-text">
+          Selamat datang dan terima kasih telah menjadi bagian dari hari
+          bahagia kami. Kehadiran serta doa restu Anda adalah hadiah
+          terindah bagi perjalanan baru kami.
+        </p>
+        <p class="script signature gold-text">Dengan penuh cinta, Hadi & Riya</p>
+      </div>
+    </section>
 
-    toast.textContent = message;
-    toast.classList.add("show");
+    <!-- MEMPELAI -->
+    <section id="couple" class="photo-section section-padding">
+      <div class="container center">
+        <p class="eyebrow reveal">TWO SOULS, ONE JOURNEY</p>
+        <h2 class="section-title gold-text reveal">Mempelai</h2>
+        <p class="muted reveal">
+          Dua hati, satu perjalanan, dan janji untuk melangkah bersama.
+        </p>
 
-    clearTimeout(toastTimer);
+        <div class="couple-grid">
+          <article class="person-card reveal">
+            <img src="hadi.jpg" alt="Hadianto Kurniawan Tan"
+                 class="person-photo" loading="lazy">
+            <p class="eyebrow">THE GROOM</p>
+            <h3>Hadianto Kurniawan Tan</h3>
+            <p class="parent-text">Putra dari</p>
+            <p class="parent-text">Bapak Tan Tjoen Hwa</p>
+            <p class="parent-text">&</p>
+            <p class="parent-text">ibu Tjhin Tjhiu Loe</p>
+          </article>
 
-    toastTimer = setTimeout(function () {
-      toast.classList.remove("show");
-    }, 2600);
-  }
+          <div class="ampersand script gold-text reveal">&</div>
 
-  // BUKA UNDANGAN
-  const openButton = $("#openButton");
+          <article class="person-card reveal delay-1">
+            <img src="riya.jpg" alt="Ilmi Riadoh"
+                 class="person-photo" loading="lazy">
+            <p class="eyebrow">THE BRIDE</p>
+            <h3>Ilmi Riadoh</h3>
+            <p class="parent-text">Putri dari</p>
+            <p class="parent-text">Bapak Muhammad Saleh (Alm)</p>
+            <p class="parent-text">&</p>
+            <p class="parent-text">Ibu Nuralam Rangkuti</p>
+          </article>
+        </div>
+        <p class="muted small"></p>
+      </div>
+    </section>
 
-  if (openButton) {
-    openButton.addEventListener("click", async function () {
-      if (opened) return;
-      opened = true;
+    <!-- COUNTDOWN -->
+    <section id="countdownSection" class="photo-section section-padding">
+      <div class="container center reveal">
+        <p class="eyebrow">SAVE THE DATE</p>
+        <h2 class="section-title gold-text">Menuju Hari Bahagia</h2>
+        <p class="muted">Sebuah hari istimewa untuk memulai selamanya.</p>
 
-      const currentGuestName = $("#guestName");
-      const currentRsvpName = $("#rsvpName");
+        <div class="countdown">
+          <div class="time-box"><strong id="days">000</strong><span>HARI</span></div>
+          <div class="time-box"><strong id="hours">00</strong><span>JAM</span></div>
+          <div class="time-box"><strong id="minutes">00</strong><span>MENIT</span></div>
+          <div class="time-box"><strong id="seconds">00</strong><span>DETIK</span></div>
+        </div>
+        <p id="countdownMessage" class="gold-text"></p>
+        <button id="calendarButton" class="outline-button">＋ SIMPAN TANGGAL</button>
+      </div>
+    </section>
 
-      if (
-        currentGuestName &&
-        currentRsvpName &&
-        currentGuestName.value.trim()
-      ) {
-        currentRsvpName.value =
-          currentGuestName.value.trim();
+    <!-- PEMBERKATAN -->
+    <section id="event" class="photo-section section-padding">
+      <div class="container center">
+        <p class="eyebrow reveal">JOIN OUR SPECIAL DAY</p>
+        <h2 class="section-title gold-text reveal">Pemberkatan</h2>
+        <p class="muted reveal">
+          Kehadiran dan doa restu Anda akan menjadi kebahagiaan bagi kami.
+        </p>
+
+        <div class="event-card reveal">
+          <div class="event-symbol gold-text">✧</div>
+          <p class="eyebrow">WEDDING CEREMONY</p>
+          <h3>Pemberkatan Pernikahan</h3>
+          <span class="gold-divider"></span>
+          <p class="event-date">SABTU, 12 DESEMBER 2026</p>
+          <p class="event-time">12.00 – 14.00 WIB</p>
+          <h3 class="venue-name">Vihara Sila Paramita</h3>
+          <p class="venue-address">
+            Jl. Cipinang Jaya Raya No.1, RT.9/RW.7,<br>
+            Cipinang Besar Selatan,<br>
+            Kecamatan Jatinegara, Kota Jakarta Timur
+          </p>
+          <a class="gold-button map-button"
+             href="https://share.google/mQ6BZdSjGvZNh7IO9"
+             target="_blank" rel="noopener noreferrer">
+            ↗ BUKA GOOGLE MAPS
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERI -->
+    <section id="gallery" class="photo-section section-padding">
+      <div class="container center">
+        <p class="eyebrow reveal">OUR PRECIOUS MOMENTS</p>
+        <h2 class="section-title gold-text reveal">Galeri Cinta</h2>
+        <p class="muted reveal">
+          Setiap momen menjadi bagian dari cerita indah perjalanan kami.
+        </p>
+
+        <div class="gallery-grid">
+          <button class="gallery-item reveal" data-image="foto1.jpg" aria-label="Lihat foto 1">
+            <img src="foto1.jpg" alt="Galeri prewedding 1" loading="lazy">
+          </button>
+          <button class="gallery-item reveal delay-1" data-image="foto2.jpg" aria-label="Lihat foto 2">
+            <img src="foto2.jpg" alt="Galeri prewedding 2" loading="lazy">
+          </button>
+          <button class="gallery-item reveal" data-image="foto3.jpg" aria-label="Lihat foto 3">
+            <img src="foto3.jpg" alt="Galeri prewedding 3" loading="lazy">
+          </button>
+          <button class="gallery-item reveal delay-1" data-image="foto4.jpg" aria-label="Lihat foto 4">
+            <img src="foto4.jpg" alt="Galeri prewedding 4" loading="lazy">
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PEMBESAR FOTO -->
+    <div id="lightbox" class="lightbox" role="dialog"
+         aria-modal="true" aria-label="Foto galeri">
+      <button id="closeLightbox" class="lightbox-close" aria-label="Tutup">×</button>
+      <img id="lightboxImage" src="" alt="Foto prewedding">
+    </div>
+
+    <!-- RSVP DAN UCAPAN -->
+    <section id="rsvp" class="photo-section section-padding">
+      <div class="container center">
+        <p class="eyebrow reveal">WE HOPE TO SEE YOU</p>
+        <h2 class="section-title gold-text reveal">RSVP & Ucapan</h2>
+        <p class="muted reveal">
+          Mohon konfirmasi kehadiran dan tinggalkan doa terbaik untuk kami.
+        </p>
+
+        <div class="form-card reveal">
+          <form id="guestForm">
+            <div class="form-group">
+              <label for="rsvpName">Nama tamu</label>
+              <input class="gold-input" id="rsvpName" name="name"
+                     maxlength="100" required placeholder="Nama lengkap">
+            </div>
+
+            <div class="form-group">
+              <label for="attendance">Konfirmasi kehadiran</label>
+              <select class="gold-input" id="attendance" name="attendance" required>
+                <option value="">Pilih konfirmasi</option>
+                <option value="Hadir">Ya, saya akan hadir</option>
+                <option value="Tidak hadir">Maaf, saya belum bisa hadir</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="guestCount">Jumlah tamu</label>
+              <select class="gold-input" id="guestCount" name="count">
+                <option value="1">1 orang</option>
+                <option value="2">2 orang</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="guestMessage">Ucapan & doa</label>
+              <textarea class="gold-input" id="guestMessage" name="message"
+                        maxlength="1000" rows="4"
+                        placeholder="Tuliskan ucapan dan doa Anda..."></textarea>
+            </div>
+
+            <button type="submit" class="gold-button submit-button">
+              KIRIM UCAPAN ✧
+            </button>
+            <p id="formStatus" class="form-status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="wishes-list">
+          <h3 class="list-title">Ucapan & Doa</h3>
+          <p class="muted small"></p>
+          <div id="notesContainer"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AMPLOP DIGITAL -->
+    <section id="gift" class="photo-section section-padding">
+      <div class="container center">
+        <p class="eyebrow reveal">A LITTLE TOKEN OF LOVE</p>
+        <h2 class="section-title gold-text reveal">Amplop Digital</h2>
+        <p class="muted reveal">
+          Doa restu Anda adalah hadiah terindah. Jika berkenan memberikan
+          tanda kasih, Anda dapat menggunakan pilihan berikut.
+        </p>
+
+        <div class="gift-grid">
+          <article class="gift-card reveal">
+            <div class="bank-logo">BCA</div>
+            <h3>Bank Central Asia</h3>
+            <p>Atas nama</p>
+            <p class="account-owner">Hadianto Kurniawan Tan</p>
+            <p class="account-number">4960141968</p>
+            <button class="outline-button copy-button"
+                    data-copy="4960141968">SALIN NOMOR REKENING</button>
+          </article>
+
+          <article class="gift-card reveal delay-1">
+            <div class="bank-logo gopay-logo">GoPay</div>
+            <h3>E-Wallet</h3>
+            <p>Atas nama</p>
+            <p class="account-owner">Ilmi Riadoh</p>
+            <p class="account-number">085774779700</p>
+            <button class="outline-button copy-button"
+                    data-copy="085774779700">SALIN NOMOR GOPAY</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PENUTUP -->
+    <section id="closing" class="photo-section section-padding closing">
+      <div class="container center reveal">
+        <p class="eyebrow">WITH LOVE & GRATITUDE</p>
+        <h2 class="script closing-title gold-text">Terima Kasih</h2>
+        <p class="closing-text">
+          Terima kasih atas perhatian, kehadiran, dan doa restu yang diberikan
+          kepada kami. Semoga kebahagiaan senantiasa menyertai kita semua.
+        </p>
+        <span class="gold-divider"></span>
+        <p class="muted">Turut mengundang</p>
+        <p class="script signature gold-text">Hadi & Riya</p>
+        <p class="date-line">12 · 12 · 2026</p>
+      </div>
+    </section>
+
+    <footer>
+      MADE WITH LOVE · HADI & RIYA · 2026
+    </footer>
+  </div>
+
+  <!-- SCRIPT UTAMA -->
+  <script src="script.js"></script>
+
+  <!-- TAMBAHAN: NAMA TAMU OTOMATIS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const paramsTamu = new URLSearchParams(window.location.search);
+      const namaTamu = paramsTamu.get("to");
+
+      if (!namaTamu || !namaTamu.trim()) return;
+
+      const namaBersih = namaTamu.trim().slice(0, 100);
+      const kolomNamaTamu = document.getElementById("guestName");
+      const kolomNamaRSVP = document.getElementById("rsvpName");
+
+      if (kolomNamaTamu) {
+        kolomNamaTamu.value = namaBersih;
       }
 
-      if (opening) opening.classList.add("closed");
-      if (site) site.classList.add("ready");
-
-      startParticles();
-
-      if (audio) {
-        try {
-          await audio.play();
-          setMusicState(true);
-        } catch (error) {
-          showToast(
-            "Undangan terbuka. Tekan tombol musik untuk memutar lagu."
-          );
-        }
+      if (kolomNamaRSVP) {
+        kolomNamaRSVP.value = namaBersih;
       }
 
-      setTimeout(function () {
-        if (opening) opening.style.display = "none";
-      }, 1100);
-    });
-  }
+      const tombolBuka = document.getElementById("openButton");
 
-  // MUSIK
-  function setMusicState(playing) {
-    if (!musicButton) return;
-
-    musicButton.classList.toggle("playing", playing);
-    musicButton.textContent = playing ? "♫" : "♪";
-
-    musicButton.setAttribute(
-      "aria-label",
-      playing ? "Jeda musik" : "Putar musik"
-    );
-  }
-
-  if (musicButton && audio) {
-    musicButton.addEventListener("click", async function () {
-      if (audio.paused) {
-        try {
-          await audio.play();
-          setMusicState(true);
-        } catch (error) {
-          showToast(
-            "Periksa file musik di repository GitHub."
-          );
-        }
-      } else {
-        audio.pause();
-        setMusicState(false);
-      }
-    });
-
-    audio.addEventListener("play", function () {
-      setMusicState(true);
-    });
-
-    audio.addEventListener("pause", function () {
-      setMusicState(false);
-    });
-
-    audio.addEventListener("ended", function () {
-      setMusicState(false);
-    });
-  }
-
-  // COUNTDOWN PERNIKAHAN
-  const weddingDate = new Date(
-    "2026-12-12T12:00:00+07:00"
-  ).getTime();
-
-  function updateCountdown() {
-    const daysElement = $("#days");
-    const hoursElement = $("#hours");
-    const minutesElement = $("#minutes");
-    const secondsElement = $("#seconds");
-    const countdownMessage = $("#countdownMessage");
-
-    if (
-      !daysElement ||
-      !hoursElement ||
-      !minutesElement ||
-      !secondsElement
-    ) {
-      return;
-    }
-
-    let remaining = weddingDate - Date.now();
-
-    if (remaining <= 0) {
-      daysElement.textContent = "000";
-      hoursElement.textContent = "00";
-      minutesElement.textContent = "00";
-      secondsElement.textContent = "00";
-
-      if (countdownMessage) {
-        countdownMessage.textContent =
-          "Hari istimewa kita telah tiba atau telah berlalu.";
-      }
-
-      return;
-    }
-
-    const days = Math.floor(remaining / 86400000);
-    remaining %= 86400000;
-
-    const hours = Math.floor(remaining / 3600000);
-    remaining %= 3600000;
-
-    const minutes = Math.floor(remaining / 60000);
-    const seconds = Math.floor((remaining % 60000) / 1000);
-
-    daysElement.textContent = String(days).padStart(3, "0");
-    hoursElement.textContent = String(hours).padStart(2, "0");
-    minutesElement.textContent = String(minutes).padStart(2, "0");
-    secondsElement.textContent = String(seconds).padStart(2, "0");
-
-    if (countdownMessage) {
-      countdownMessage.textContent =
-        "Kami menantikan hari bahagia ini bersama Anda.";
-    }
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-
-  // TAMBAHKAN KE KALENDER
-  const calendarButton = $("#calendarButton");
-
-  if (calendarButton) {
-    calendarButton.addEventListener("click", function () {
-      const calendarData = [
-        "BEGIN:VCALENDAR",
-        "VERSION:2.0",
-        "PRODID:-//Hadi and Riya//Wedding Invitation//ID",
-        "CALSCALE:GREGORIAN",
-        "BEGIN:VEVENT",
-        "UID:hadi-riya-20261212@wedding",
-        "DTSTAMP:20261016T000000Z",
-        "DTSTART:20261212T050000Z",
-        "DTEND:20261212T070000Z",
-        "SUMMARY:Pemberkatan Pernikahan Hadi & Riya",
-        "LOCATION:Vihara Sila Paramita, Jakarta Timur",
-        "DESCRIPTION:Pemberkatan Hadianto Kurniawan Tan dan Ilmi Riadoh",
-        "END:VEVENT",
-        "END:VCALENDAR"
-      ].join("\r\n");
-
-      const blob = new Blob([calendarData], {
-        type: "text/calendar;charset=utf-8"
-      });
-
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-
-      link.href = url;
-      link.download = "Pemberkatan-Hadi-Riya.ics";
-
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-
-      setTimeout(function () {
-        URL.revokeObjectURL(url);
-      }, 1000);
-    });
-  }
-
-  // ANIMASI SCROLL
-  const revealItems = document.querySelectorAll(".reveal");
-
-  if ("IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
+      if (tombolBuka) {
+        tombolBuka.addEventListener("click", function () {
+          if (kolomNamaRSVP && kolomNamaTamu && kolomNamaTamu.value.trim()) {
+            kolomNamaRSVP.value = kolomNamaTamu.value.trim();
           }
         });
-      },
-      { threshold: 0.12 }
-    );
-
-    revealItems.forEach(function (item) {
-      observer.observe(item);
-    });
-  } else {
-    revealItems.forEach(function (item) {
-      item.classList.add("visible");
-    });
-  }
-
-  // PARTIKEL EMAS
-  function createParticle() {
-    if (document.hidden || !opened) return;
-
-    const container = $("#particles");
-    if (!container) return;
-
-    const particle = document.createElement("span");
-    const symbols = ["✧", "✦", "❋", "·"];
-
-    particle.className = "particle";
-    particle.textContent =
-      symbols[Math.floor(Math.random() * symbols.length)];
-
-    particle.style.left = Math.random() * 100 + "%";
-    particle.style.fontSize =
-      8 + Math.random() * 12 + "px";
-
-    particle.style.setProperty(
-      "--drift",
-      Math.round(Math.random() * 160 - 80) + "px"
-    );
-
-    particle.style.animationDuration =
-      7 + Math.random() * 7 + "s";
-
-    container.appendChild(particle);
-
-    setTimeout(function () {
-      particle.remove();
-    }, 15000);
-  }
-
-  function startParticles() {
-    if (particleInterval) return;
-
-    for (let i = 0; i < 15; i++) {
-      setTimeout(createParticle, i * 180);
-    }
-
-    particleInterval = setInterval(createParticle, 650);
-  }
-
-  // PARALLAX FOTO
-  const heroPhoto = $(".hero-photo");
-
-  if (
-    window.matchMedia("(hover: hover) and (pointer: fine)").matches
-  ) {
-    document.addEventListener("mousemove", function (event) {
-      if (!opened || !heroPhoto) return;
-
-      const x = (event.clientX / window.innerWidth - 0.5) * 8;
-      const y = (event.clientY / window.innerHeight - 0.5) * 8;
-
-      heroPhoto.style.translate = x + "px " + y + "px";
-    });
-  }
-
-  // GALERI FOTO
-  const lightbox = $("#lightbox");
-  const lightboxImage = $("#lightboxImage");
-  const closeLightboxButton = $("#closeLightbox");
-
-  document.querySelectorAll(".gallery-item").forEach(function (item) {
-    item.addEventListener("click", function () {
-      if (!lightbox || !lightboxImage) return;
-
-      const imagePath = item.dataset.image;
-      if (!imagePath) return;
-
-      lightboxImage.src = imagePath;
-      lightbox.classList.add("show");
-      document.body.style.overflow = "hidden";
-    });
-  });
-
-  function closeLightbox() {
-    if (lightbox) lightbox.classList.remove("show");
-    if (lightboxImage) lightboxImage.src = "";
-    document.body.style.overflow = "";
-  }
-
-  if (closeLightboxButton) {
-    closeLightboxButton.addEventListener(
-      "click",
-      closeLightbox
-    );
-  }
-
-  if (lightbox) {
-    lightbox.addEventListener("click", function (event) {
-      if (event.target === lightbox) {
-        closeLightbox();
       }
     });
-  }
+  </script>
 
-  document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape") closeLightbox();
-  });
-
-  // SALIN REKENING DAN GOPAY
-  document.querySelectorAll(".copy-button").forEach(function (button) {
-    button.addEventListener("click", async function () {
-      const number = button.dataset.copy || "";
-
-      if (!number) {
-        showToast("Nomor rekening belum tersedia.");
-        return;
-      }
-
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(number);
-          showToast("Nomor berhasil disalin: " + number);
-        } else {
-          showToast(
-            "Silakan salin nomor secara manual: " + number
-          );
-        }
-      } catch (error) {
-        showToast(
-          "Silakan salin nomor secara manual: " + number
-        );
-      }
-    });
-  });
-
-  // RSVP DAN UCAPAN
-  // Data saat ini tersimpan di browser masing-masing.
-  const storageKey = "hadiRiyaWedding2026";
-
-  function getEntries() {
-    try {
-      const entries = JSON.parse(
-        localStorage.getItem(storageKey) || "[]"
-      );
-
-      return Array.isArray(entries) ? entries : [];
-    } catch (error) {
-      return [];
-    }
-  }
-
-  function renderEntries() {
-    const container = $("#notesContainer");
-    if (!container) return;
-
-    container.replaceChildren();
-
-    const entries = getEntries().slice().reverse();
-
-    if (entries.length === 0) {
-      const empty = document.createElement("p");
-      empty.className = "muted small";
-      empty.textContent =
-        "Jadilah yang pertama mengirimkan doa dan ucapan.";
-
-      container.appendChild(empty);
-      return;
-    }
-
-    entries.forEach(function (entry) {
-      const article = document.createElement("article");
-      article.className = "guest-note";
-
-      const name = document.createElement("strong");
-      name.textContent = entry.name || "Tamu";
-
-      const status = document.createElement("small");
-      status.textContent =
-        "Konfirmasi: " +
-        (entry.attendance || "Belum diisi") +
-        (entry.attendance === "Hadir"
-          ? " · " + (entry.count || "1") + " orang"
-          : "");
-
-      article.append(name, status);
-
-      if (entry.message) {
-        const message = document.createElement("p");
-        message.textContent = entry.message;
-        article.appendChild(message);
-      }
-
-      container.appendChild(article);
-    });
-  }
-
-  const guestForm = $("#guestForm");
-
-  if (guestForm) {
-    guestForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const currentRsvpName = $("#rsvpName");
-      const attendanceInput = $("#attendance");
-      const guestCount = $("#guestCount");
-      const guestMessage = $("#guestMessage");
-      const status = $("#formStatus");
-
-      if (
-        !currentRsvpName ||
-        !attendanceInput ||
-        !guestCount ||
-        !guestMessage ||
-        !status
-      ) {
-        showToast("Formulir belum lengkap di HTML.");
-        return;
-      }
-
-      const name = currentRsvpName.value.trim();
-      const attendance = attendanceInput.value;
-      const count = guestCount.value;
-      const message = guestMessage.value.trim();
-
-      if (!name || !attendance) {
-        status.textContent =
-          "Mohon isi nama dan konfirmasi kehadiran.";
-        return;
-      }
-
-      const entries = getEntries();
-
-      entries.push({
-        name: name,
-        attendance: attendance,
-        count: attendance === "Hadir" ? count : "0",
-        message: message,
-        date: new Date().toISOString()
-      });
-
-      try {
-        localStorage.setItem(
-          storageKey,
-          JSON.stringify(entries)
-        );
-
-        status.textContent =
-          "Ucapan tersimpan pada browser ini. Data belum dikirim ke pemilik undangan.";
-
-        renderEntries();
-
-        guestMessage.value = "";
-        attendanceInput.value = "";
-        guestCount.value = "1";
-      } catch (error) {
-        status.textContent =
-          "Data tidak dapat disimpan di browser ini.";
-      }
-    });
-  }
-
-  renderEntries();
-
-  // PEMERIKSAAN FOTO
-  document.querySelectorAll("img").forEach(function (image) {
-    image.addEventListener("error", function () {
-      console.warn(
-        "Foto gagal dimuat. Periksa nama file:",
-        image.getAttribute("src")
-      );
-    });
-  });
-});
-    }
-
-    entries.forEach(function (entry) {
-      const article = document.createElement("article");
-      article.className = "guest-note";
-
-      const name = document.createElement("strong");
-      name.textContent = entry.name || "Tamu";
-
-      const status = document.createElement("small");
-      status.textContent =
-        "Konfirmasi: " + (entry.attendance || "Belum diisi") +
-        (entry.attendance === "Hadir"
-          ? " · " + (entry.count || "1") + " orang"
-          : "");
-
-      article.append(name, status);
-
-      if (entry.message) {
-        const message = document.createElement("p");
-        message.textContent = entry.message;
-        article.appendChild(message);
-      }
-
-      container.appendChild(article);
-    });
-  }
-
-  const guestForm = $("#guestForm");
-
-  if (guestForm) {
-    guestForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      const rsvpName = $("#rsvpName");
-      const attendanceInput = $("#attendance");
-      const guestCount = $("#guestCount");
-      const guestMessage = $("#guestMessage");
-      const status = $("#formStatus");
-
-      if (
-        !rsvpName ||
-        !attendanceInput ||
-        !guestCount ||
-        !guestMessage ||
-        !status
-      ) {
-        showToast("Formulir belum lengkap di HTML.");
-        return;
-      }
-
-      const name = rsvpName.value.trim();
-      const attendance = attendanceInput.value;
-      const count = guestCount.value;
-      const message = guestMessage.value.trim();
-
-      if (!name || !attendance) {
-        status.textContent =
-          "Mohon isi nama dan konfirmasi kehadiran.";
-        return;
-      }
-
-      const entries = getEntries();
-
-      entries.push({
-        name: name,
-        attendance: attendance,
-        count: attendance === "Hadir" ? count : "0",
-        message: message,
-        date: new Date().toISOString()
-      });
-
-      try {
-        localStorage.setItem(storageKey, JSON.stringify(entries));
-
-        status.textContent =
-          "Ucapan tersimpan pada browser ini. Data belum dikirim ke pemilik undangan.";
-
-        renderEntries();
-
-        guestMessage.value = "";
-        attendanceInput.value = "";
-        guestCount.value = "1";
-      } catch (error) {
-        status.textContent =
-          "Data tidak dapat disimpan di browser ini.";
-      }
-    });
-  }
-
-  renderEntries();
-
-  // PEMERIKSAAN FOTO
-  document.querySelectorAll("img").forEach(function (image) {
-    image.addEventListener("error", function () {
-      console.warn(
-        "Foto gagal dimuat. Periksa nama file:",
-        image.getAttribute("src")
-      );
-    });
-  });
-});
+</body>
+</html>
+  
