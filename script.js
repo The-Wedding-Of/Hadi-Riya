@@ -15,6 +15,27 @@ document.addEventListener("DOMContentLoaded", function () {
   let particleInterval = null;
   let toastTimer = null;
 
+  // ==========================================
+  // NAMA TAMU OTOMATIS DARI TAUTAN UNDANGAN
+  // ==========================================
+  const params = new URLSearchParams(window.location.search);
+  const invitedName = params.get("to");
+
+  const guestName = $("#guestName");
+  const rsvpName = $("#rsvpName");
+
+  if (invitedName && invitedName.trim()) {
+    const name = invitedName.trim().slice(0, 100);
+
+    if (guestName) {
+      guestName.value = name;
+    }
+
+    if (rsvpName) {
+      rsvpName.value = name;
+    }
+  }
+
   // NOTIFIKASI
   function showToast(message) {
     if (!toast) {
@@ -26,6 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
     toast.classList.add("show");
 
     clearTimeout(toastTimer);
+
     toastTimer = setTimeout(function () {
       toast.classList.remove("show");
     }, 2600);
@@ -39,11 +61,16 @@ document.addEventListener("DOMContentLoaded", function () {
       if (opened) return;
       opened = true;
 
-      const guestName = $("#guestName");
-      const rsvpName = $("#rsvpName");
+      const currentGuestName = $("#guestName");
+      const currentRsvpName = $("#rsvpName");
 
-      if (guestName && rsvpName && guestName.value.trim()) {
-        rsvpName.value = guestName.value.trim();
+      if (
+        currentGuestName &&
+        currentRsvpName &&
+        currentGuestName.value.trim()
+      ) {
+        currentRsvpName.value =
+          currentGuestName.value.trim();
       }
 
       if (opening) opening.classList.add("closed");
@@ -74,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     musicButton.classList.toggle("playing", playing);
     musicButton.textContent = playing ? "♫" : "♪";
+
     musicButton.setAttribute(
       "aria-label",
       playing ? "Jeda musik" : "Putar musik"
@@ -87,7 +115,9 @@ document.addEventListener("DOMContentLoaded", function () {
           await audio.play();
           setMusicState(true);
         } catch (error) {
-          showToast("Periksa file ful.mp3 di repository GitHub.");
+          showToast(
+            "Periksa file musik di repository GitHub."
+          );
         }
       } else {
         audio.pause();
@@ -250,7 +280,8 @@ document.addEventListener("DOMContentLoaded", function () {
       symbols[Math.floor(Math.random() * symbols.length)];
 
     particle.style.left = Math.random() * 100 + "%";
-    particle.style.fontSize = 8 + Math.random() * 12 + "px";
+    particle.style.fontSize =
+      8 + Math.random() * 12 + "px";
 
     particle.style.setProperty(
       "--drift",
@@ -318,7 +349,10 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   if (closeLightboxButton) {
-    closeLightboxButton.addEventListener("click", closeLightbox);
+    closeLightboxButton.addEventListener(
+      "click",
+      closeLightbox
+    );
   }
 
   if (lightbox) {
@@ -334,7 +368,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // SALIN REKENING DAN GOPAY
-  // Tidak memakai document.execCommand().
   document.querySelectorAll(".copy-button").forEach(function (button) {
     button.addEventListener("click", async function () {
       const number = button.dataset.copy || "";
@@ -349,16 +382,20 @@ document.addEventListener("DOMContentLoaded", function () {
           await navigator.clipboard.writeText(number);
           showToast("Nomor berhasil disalin: " + number);
         } else {
-          showToast("Silakan salin nomor secara manual: " + number);
+          showToast(
+            "Silakan salin nomor secara manual: " + number
+          );
         }
       } catch (error) {
-        showToast("Silakan salin nomor secara manual: " + number);
+        showToast(
+          "Silakan salin nomor secara manual: " + number
+        );
       }
     });
   });
 
   // RSVP DAN UCAPAN
-  // Catatan: localStorage hanya menyimpan data pada browser pengguna.
+  // Data saat ini tersimpan di browser masing-masing.
   const storageKey = "hadiRiyaWedding2026";
 
   function getEntries() {
@@ -386,8 +423,115 @@ document.addEventListener("DOMContentLoaded", function () {
       empty.className = "muted small";
       empty.textContent =
         "Jadilah yang pertama mengirimkan doa dan ucapan.";
+
       container.appendChild(empty);
       return;
+    }
+
+    entries.forEach(function (entry) {
+      const article = document.createElement("article");
+      article.className = "guest-note";
+
+      const name = document.createElement("strong");
+      name.textContent = entry.name || "Tamu";
+
+      const status = document.createElement("small");
+      status.textContent =
+        "Konfirmasi: " +
+        (entry.attendance || "Belum diisi") +
+        (entry.attendance === "Hadir"
+          ? " · " + (entry.count || "1") + " orang"
+          : "");
+
+      article.append(name, status);
+
+      if (entry.message) {
+        const message = document.createElement("p");
+        message.textContent = entry.message;
+        article.appendChild(message);
+      }
+
+      container.appendChild(article);
+    });
+  }
+
+  const guestForm = $("#guestForm");
+
+  if (guestForm) {
+    guestForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const currentRsvpName = $("#rsvpName");
+      const attendanceInput = $("#attendance");
+      const guestCount = $("#guestCount");
+      const guestMessage = $("#guestMessage");
+      const status = $("#formStatus");
+
+      if (
+        !currentRsvpName ||
+        !attendanceInput ||
+        !guestCount ||
+        !guestMessage ||
+        !status
+      ) {
+        showToast("Formulir belum lengkap di HTML.");
+        return;
+      }
+
+      const name = currentRsvpName.value.trim();
+      const attendance = attendanceInput.value;
+      const count = guestCount.value;
+      const message = guestMessage.value.trim();
+
+      if (!name || !attendance) {
+        status.textContent =
+          "Mohon isi nama dan konfirmasi kehadiran.";
+        return;
+      }
+
+      const entries = getEntries();
+
+      entries.push({
+        name: name,
+        attendance: attendance,
+        count: attendance === "Hadir" ? count : "0",
+        message: message,
+        date: new Date().toISOString()
+      });
+
+      try {
+        localStorage.setItem(
+          storageKey,
+          JSON.stringify(entries)
+        );
+
+        status.textContent =
+          "Ucapan tersimpan pada browser ini. Data belum dikirim ke pemilik undangan.";
+
+        renderEntries();
+
+        guestMessage.value = "";
+        attendanceInput.value = "";
+        guestCount.value = "1";
+      } catch (error) {
+        status.textContent =
+          "Data tidak dapat disimpan di browser ini.";
+      }
+    });
+  }
+
+  renderEntries();
+
+  // PEMERIKSAAN FOTO
+  document.querySelectorAll("img").forEach(function (image) {
+    image.addEventListener("error", function () {
+      console.warn(
+        "Foto gagal dimuat. Periksa nama file:",
+        image.getAttribute("src")
+      );
+    });
+  });
+});
     }
 
     entries.forEach(function (entry) {
